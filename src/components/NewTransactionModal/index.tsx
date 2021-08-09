@@ -4,7 +4,7 @@ import  closeImg  from '../../assets/close.svg';
 import incomeIgm from '../../assets/income.svg';
 import outcomeIgm from '../../assets/outcome.svg';
 import { FormEvent, useState } from 'react';
-// import { api } from '../../services/api';
+import { useTransactions } from '../../hooks/useTransactions';
 
 interface INewTransactionProps{
     isOpen: boolean;
@@ -12,6 +12,8 @@ interface INewTransactionProps{
 }
 
 export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionProps) {
+    const { createTransaction } = useTransactions();
+
     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState(0);
     const [category, setCategory] = useState('');
@@ -20,12 +22,12 @@ export function NewTransactionModal({isOpen, onRequestClose}: INewTransactionPro
     async function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault();
 
-        // await createTransaction({
-        //     title,
-        //     amount,
-        //     category,
-        //     type,
-        // });
+        await createTransaction({
+            title,
+            amount,
+            category,
+            type,
+        });
 
         setTitle('');
         setAmount(0);
